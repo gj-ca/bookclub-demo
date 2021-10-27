@@ -1,0 +1,12 @@
+<h1><%= @book.title %></h1>
+<h3>By <%= @book.author.full_name %></h3>
+<h5>Genres: <%= @book.genres.map { |g| g.name }.join(", ") %></h5>
+<p>Publisher: <%= @book.publisher %></p>
+<p>Date Published: <%= @book.date_published %></p>
+<p>
+    <%= link_to "<< Back to book list", books_path %>
+    |
+    <%= link_to "Edit", edit_book_path(@book) %>
+    |
+    <%= link_to "Delete", @book, method: :delete, data: { confirm: "Are you sure?" } %>
+</p>
