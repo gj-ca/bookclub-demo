@@ -1,4 +1,6 @@
 class BooksController < ApplicationController
+  before_action :authenticate_user!
+  before_action :check_auth
   before_action :set_authors_and_genres, only: [:new, :edit, :create]
   before_action :set_book, only: [:update, :edit, :show, :destroy]
 
@@ -40,7 +42,7 @@ class BooksController < ApplicationController
   private
 
   def book_params
-    params.require(:book).permit(:title, :publisher, :date_published, :author_id, genre_ids: [])
+    params.require(:book).permit(:title, :publisher, :date_published, :cover, :author_id, genre_ids: [])
   end
 
   def set_authors_and_genres
@@ -50,5 +52,9 @@ class BooksController < ApplicationController
 
   def set_book
     @book = Book.find(params[:id])
+  end
+
+  def check_auth
+    authorize Book
   end
 end

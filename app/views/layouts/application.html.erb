@@ -11,6 +11,7 @@
   </head>
 
   <body>
+    <%= render 'layouts/topnav' %>
     <% if flash[:errors] %>
       <section id="errors">
           <% flash[:errors].each do |error| %>
@@ -18,6 +19,8 @@
           <% end %>
       </section>
     <% end %>
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
     <%= yield %>
   </body>
 </html>
