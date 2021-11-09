@@ -1,8 +1,30 @@
 class BooksController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_auth
+  before_action :check_auth, except: [:search]
   before_action :set_authors_and_genres, only: [:new, :edit, :create]
   before_action :set_book, only: [:update, :edit, :show, :destroy]
+
+  def search
+    # exact search
+    # @books = Book.where(title: "a")
+
+    # like search
+    case params[:type]
+    when "genre"
+    when "publisher"
+    when "author"
+      @books = []
+      authors = Author.where("first_name LIKE ?", "%#{params[:query]}%").or(Author.where("last_name LIKE ?", "%#{params[:query]}%"))
+      authors.each do |author|
+        author.books.each do |book|
+          @books << book
+        end
+      end
+    when "title"
+      @books = Book.where("title LIKE ?", "%#{params[:query]}%")
+    end
+      render "index"
+  end
 
   def new
     @book = Book.new
