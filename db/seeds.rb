@@ -16,7 +16,12 @@ genres = [
     Genre.create!(name: "Children")
 ]
 
-Book.create!(title: "Harry Potter", author: jkr, publisher: "Penguin", date_published: "2021-10-26", genres: [genres[0], genres[6]])
-Book.create!(title: "Fantastic Beasts", author: jkr, publisher: "Apple", date_published: "2021-10-26", genres: [genres[0]])
-Book.create!(title: "2001", author: clarke, publisher: "foo", date_published: "2021-10-26", genres: [genres[3]])
-Book.create!(title: "A Fall Of Moondust", author: clarke, publisher: "blah", date_published: "2021-10-26",  genres: [genres[3]])
+Book.create!(price: 1000, title: "Harry Potter", author: jkr, publisher: "Penguin", date_published: "2021-10-26", genres: [genres[0], genres[6]])
+Book.create!(price: 2000, title: "Fantastic Beasts", author: jkr, publisher: "Apple", date_published: "2021-10-26", genres: [genres[0]])
+Book.create!(price: 3000, title: "2001", author: clarke, publisher: "foo", date_published: "2021-10-26", genres: [genres[3]])
+Book.create!(price: 4000, title: "A Fall Of Moondust", author: clarke, publisher: "blah", date_published: "2021-10-26",  genres: [genres[3]])
+
+
+puts "#{Author.count}/4 authors were created"
+puts "#{Genre.count}/7 genres were created"
+puts "#{Book.count}/4 books were created"
