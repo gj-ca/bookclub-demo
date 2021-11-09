@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_09_012727) do
+ActiveRecord::Schema.define(version: 2021_11_09_024225) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,15 @@ ActiveRecord::Schema.define(version: 2021_11_09_012727) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "book_carts", force: :cascade do |t|
+    t.bigint "book_id", null: false
+    t.bigint "cart_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["book_id"], name: "index_book_carts_on_book_id"
+    t.index ["cart_id"], name: "index_book_carts_on_cart_id"
+  end
+
   create_table "book_genres", force: :cascade do |t|
     t.bigint "book_id", null: false
     t.bigint "genre_id", null: false
@@ -68,6 +77,15 @@ ActiveRecord::Schema.define(version: 2021_11_09_012727) do
     t.bigint "author_id", null: false
     t.integer "price"
     t.index ["author_id"], name: "index_books_on_author_id"
+  end
+
+  create_table "carts", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.boolean "completed"
+    t.integer "price"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_carts_on_user_id"
   end
 
   create_table "genres", force: :cascade do |t|
@@ -108,7 +126,10 @@ ActiveRecord::Schema.define(version: 2021_11_09_012727) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "book_carts", "books"
+  add_foreign_key "book_carts", "carts"
   add_foreign_key "book_genres", "books"
   add_foreign_key "book_genres", "genres"
   add_foreign_key "books", "authors"
+  add_foreign_key "carts", "users"
 end

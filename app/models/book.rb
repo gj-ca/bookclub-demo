@@ -4,6 +4,9 @@ class Book < ApplicationRecord
     has_many :book_genres, dependent: :destroy
     has_many :genres, through: :book_genres
 
+    has_many :book_carts, dependent: :destroy
+    has_many :carts, through: :book_carts
+
     has_one_attached :cover, dependent: :purge
 
     validates :title, presence: { message: "Please provide a title" }
