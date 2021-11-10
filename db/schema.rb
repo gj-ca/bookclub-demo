@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_09_024225) do
+ActiveRecord::Schema.define(version: 2021_11_10_013745) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,7 +76,9 @@ ActiveRecord::Schema.define(version: 2021_11_09_024225) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "author_id", null: false
     t.integer "price"
+    t.bigint "user_id", null: false
     t.index ["author_id"], name: "index_books_on_author_id"
+    t.index ["user_id"], name: "index_books_on_user_id"
   end
 
   create_table "carts", force: :cascade do |t|
@@ -88,10 +90,38 @@ ActiveRecord::Schema.define(version: 2021_11_09_024225) do
     t.index ["user_id"], name: "index_carts_on_user_id"
   end
 
+  create_table "favourited_books", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "book_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["book_id"], name: "index_favourited_books_on_book_id"
+    t.index ["user_id"], name: "index_favourited_books_on_user_id"
+  end
+
   create_table "genres", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "liked_books", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "book_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["book_id"], name: "index_liked_books_on_book_id"
+    t.index ["user_id"], name: "index_liked_books_on_user_id"
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.bigint "reviewer_id", null: false
+    t.bigint "reviewee_id", null: false
+    t.integer "score"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["reviewee_id"], name: "index_reviews_on_reviewee_id"
+    t.index ["reviewer_id"], name: "index_reviews_on_reviewer_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -131,5 +161,12 @@ ActiveRecord::Schema.define(version: 2021_11_09_024225) do
   add_foreign_key "book_genres", "books"
   add_foreign_key "book_genres", "genres"
   add_foreign_key "books", "authors"
+  add_foreign_key "books", "users"
   add_foreign_key "carts", "users"
+  add_foreign_key "favourited_books", "books"
+  add_foreign_key "favourited_books", "users"
+  add_foreign_key "liked_books", "books"
+  add_foreign_key "liked_books", "users"
+  add_foreign_key "reviews", "users", column: "reviewee_id"
+  add_foreign_key "reviews", "users", column: "reviewer_id"
 end

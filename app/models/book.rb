@@ -1,5 +1,13 @@
 class Book < ApplicationRecord
     resourcify
+    belongs_to :user
+
+    has_many :liked_books
+    has_many :likers, through: :liked_books, source: :user
+
+    has_many :favourited_books
+    has_many :favouriters, through: :favourited_books, source: :user
+    
     belongs_to :author
     has_many :book_genres, dependent: :destroy
     has_many :genres, through: :book_genres

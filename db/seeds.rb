@@ -16,10 +16,14 @@ genres = [
     Genre.create!(name: "Children")
 ]
 
-Book.create!(price: 1000, title: "Harry Potter", author: jkr, publisher: "Penguin", date_published: "2021-10-26", genres: [genres[0], genres[6]])
-Book.create!(price: 2000, title: "Fantastic Beasts", author: jkr, publisher: "Apple", date_published: "2021-10-26", genres: [genres[0]])
-Book.create!(price: 3000, title: "2001", author: clarke, publisher: "foo", date_published: "2021-10-26", genres: [genres[3]])
-Book.create!(price: 4000, title: "A Fall Of Moondust", author: clarke, publisher: "blah", date_published: "2021-10-26",  genres: [genres[3]])
+User.create!(email: "foo@bar.com", password: "password")
+
+User.first.add_role(:admin)
+
+Book.create!(user: User.first, price: 1000, title: "Harry Potter", author: jkr, publisher: "Penguin", date_published: "2021-10-26", genres: [genres[0], genres[6]])
+Book.create!(user: User.first, price: 2000, title: "Fantastic Beasts", author: jkr, publisher: "Apple", date_published: "2021-10-26", genres: [genres[0]])
+Book.create!(user: User.first, price: 3000, title: "2001", author: clarke, publisher: "foo", date_published: "2021-10-26", genres: [genres[3]])
+Book.create!(user: User.first, price: 4000, title: "A Fall Of Moondust", author: clarke, publisher: "blah", date_published: "2021-10-26",  genres: [genres[3]])
 
 
 puts "#{Author.count}/4 authors were created"
